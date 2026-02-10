@@ -1,13 +1,14 @@
+// 這裡是：首頁 (Dashboard)
 'use client';
 
 import React from 'react';
 import Link from 'next/link';
 import { 
   Users, FileText, Zap, Settings, 
-  Home, Plus, ChevronRight, Bell, Search, TrendingUp, MapPin
+  Home, Plus, ChevronRight, Bell, Search, TrendingUp, LayoutGrid 
 } from 'lucide-react';
 
-// 溫柔拿鐵色票
+// 官方定案色票：溫柔拿鐵
 const colors = {
   bgMain: '#F1EEEB',       
   textPrimary: '#4B382A',  
@@ -17,8 +18,7 @@ const colors = {
   cardBg: '#FFFFFF',       
   navBg: '#A09086',        
   navTextActive: '#F1EEEB',
-  navTextInactive: '#D4C5B9',
-  tagBg: '#F2F0EE'
+  navTextInactive: '#D4C5B9'
 };
 
 export default function Dashboard() {
@@ -87,52 +87,19 @@ export default function Dashboard() {
         <div className="animate-in fade-in slide-in-from-bottom-6 duration-700">
             <h3 className="text-xs font-bold tracking-widest mb-4 uppercase" style={{ color: colors.textSecondary }}>快速執行</h3>
             <div className="grid grid-cols-4 gap-3">
-                {/* 1. 這裡改成「新增」 */}
-                <Link href="/properties/new">
-                    <QuickBtn icon={<Plus size={24} />} label="新增" active colors={colors} />
+                
+                {/* 🔥 關鍵路線 1：房源總覽 -> 去列表頁 (/properties) */}
+                <Link href="/properties">
+                    <QuickBtn icon={<LayoutGrid size={22} />} label="房源總覽" active colors={colors} />
                 </Link>
+                
                 <QuickBtn icon={<FileText size={20} />} label="合約" colors={colors} />
                 <QuickBtn icon={<Zap size={20} />} label="抄表" colors={colors} />
                 <QuickBtn icon={<Users size={20} />} label="房客" colors={colors} />
             </div>
         </div>
 
-        {/* 我的房源列表 */}
-        <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <div className="flex justify-between items-end mb-4">
-                <h3 className="text-xs font-bold tracking-widest uppercase" style={{ color: colors.textSecondary }}>我的房源</h3>
-                <span className="text-[10px] font-bold text-[#CFB3A9]">查看全部</span>
-            </div>
-            
-            <div className="space-y-4">
-                {/* 2. 這裡加上 Link，點擊卡片會跳轉到房源詳情頁 (id=1) */}
-                <Link href="/properties/1" className="block">
-                    <PropertyCard 
-                        name="暮居文心創始館" 
-                        address="南屯區文心南路 289 號" 
-                        status="招租中" 
-                        price="$28,000" 
-                        tags={['整層', '3房']}
-                        isNew
-                        colors={colors} 
-                    />
-                </Link>
-                
-                {/* 既有的房子也可以連 */}
-                <Link href="/properties/1" className="block">
-                    <PropertyCard 
-                        name="暮居大墩二館" 
-                        address="南屯區大墩路 102 號" 
-                        status="滿租" 
-                        price="$15,500" 
-                        tags={['套房', '12坪']}
-                        colors={colors} 
-                    />
-                </Link>
-            </div>
-        </div>
-
-        {/* 待辦事項 */}
+        {/* 待辦事項清單 */}
         <div>
             <h3 className="text-xs font-bold tracking-widest mb-4 uppercase" style={{ color: colors.textSecondary }}>待辦事項</h3>
             <div className="rounded-[24px] p-2 shadow-sm border border-white" style={{ backgroundColor: colors.cardBg }}>
@@ -150,59 +117,25 @@ export default function Dashboard() {
         <div className="rounded-full shadow-2xl px-8 py-4 flex items-center gap-8 pointer-events-auto relative transform translate-y-2" style={{ backgroundColor: colors.navBg }}>
             <NavIcon icon={<Home size={24} />} active colors={colors} />
             <NavIcon icon={<Users size={24} />} colors={colors} />
+            
+            {/* 🔥 關鍵路線 2：下方中間大按鈕 -> 直達建立頁 (/properties/new) */}
             <Link href="/properties/new">
                 <div className="p-4 rounded-full -mt-12 shadow-xl border-4 transition-transform active:scale-95" 
                      style={{ backgroundColor: colors.accent, borderColor: colors.bgMain, color: 'white' }}>
                     <Plus size={28} />
                 </div>
             </Link>
+            
             <NavIcon icon={<Zap size={24} />} colors={colors} />
             <NavIcon icon={<Settings size={24} />} colors={colors} />
         </div>
       </div>
+
     </div>
   );
 }
 
 // --- 元件區 ---
-
-function PropertyCard({ name, address, status, price, tags, isNew, colors }: any) {
-    return (
-        <div className="rounded-[24px] p-4 shadow-sm border border-transparent hover:border-[#CFB3A9] transition-all cursor-pointer flex gap-4 items-center group active:scale-98"
-             style={{ backgroundColor: colors.cardBg }}>
-            {/* 房源縮圖 */}
-            <div className="w-20 h-20 rounded-2xl bg-[#E4D8CB] flex items-center justify-center text-[#A09086] relative overflow-hidden">
-                <Home size={24} className="opacity-50" />
-                {isNew && <span className="absolute top-0 left-0 w-full text-[8px] bg-[#CFB3A9] text-white text-center py-0.5">NEW</span>}
-            </div>
-            
-            <div className="flex-1">
-                <div className="flex justify-between items-start mb-1">
-                    <h4 className="font-bold text-sm" style={{ color: colors.textPrimary }}>{name}</h4>
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${status === '滿租' ? 'text-[#7D9D75] bg-[#F2F8F2]' : 'text-[#CFB3A9] bg-[#FAF4F0]'}`}>
-                        {status}
-                    </span>
-                </div>
-                
-                <div className="flex items-center gap-1 mb-2">
-                    <MapPin size={10} style={{ color: colors.textSecondary }} />
-                    <p className="text-[10px]" style={{ color: colors.textSecondary }}>{address}</p>
-                </div>
-
-                <div className="flex justify-between items-end">
-                    <div className="flex gap-1">
-                        {tags.map((tag: string, i: number) => (
-                            <span key={i} className="text-[9px] px-1.5 py-0.5 rounded-md" style={{ backgroundColor: colors.tagBg, color: colors.textSecondary }}>
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-                    <p className="font-bold text-sm" style={{ color: colors.textPrimary }}>{price}<span className="text-[9px] font-normal text-[#8C7E74]">/月</span></p>
-                </div>
-            </div>
-        </div>
-    )
-}
 
 function QuickBtn({ icon, label, active, colors }: any) {
     return (
@@ -215,7 +148,7 @@ function QuickBtn({ icon, label, active, colors }: any) {
                  }}>
                 {icon}
             </div>
-            <span className="text-xs font-bold" style={{ color: colors.textPrimary }}>{label}</span>
+            <span className="text-xs font-bold text-center leading-tight" style={{ color: colors.textPrimary }}>{label}</span>
         </div>
     )
 }
