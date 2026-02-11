@@ -1,4 +1,4 @@
-// 這裡是：首頁 (Dashboard) - 全能指揮中心
+// 這裡是：首頁 (Dashboard) - 全能指揮中心 (最終整合版)
 'use client';
 
 import React from 'react';
@@ -10,7 +10,18 @@ import {
   ShoppingBag, Key, Plus, ChevronRight
 } from 'lucide-react';
 
-const colors = { bgMain: '#F1EEEB', textPrimary: '#4B382A', textSecondary: '#8C7E74', accent: '#CFB3A9', accentWarm: '#E4D8CB', cardBg: '#FFFFFF', navBg: '#A09086', navTextActive: '#F1EEEB', navTextInactive: '#D4C5B9' };
+// 官方定案色票
+const colors = { 
+  bgMain: '#F1EEEB', 
+  textPrimary: '#4B382A', 
+  textSecondary: '#8C7E74', 
+  accent: '#CFB3A9', 
+  accentWarm: '#E4D8CB', 
+  cardBg: '#FFFFFF', 
+  navBg: '#A09086', 
+  navTextActive: '#F1EEEB', 
+  navTextInactive: '#D4C5B9' 
+};
 
 export default function Dashboard() {
   return (
@@ -37,52 +48,69 @@ export default function Dashboard() {
         {/* 核心數據卡 */}
         <div className="rounded-[32px] p-6 shadow-xl relative overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700" style={{ backgroundColor: colors.navBg, color: colors.bgMain }}><div className="absolute top-0 right-0 w-40 h-40 opacity-20 rounded-full blur-3xl -mr-10 -mt-10 bg-white"></div><div className="relative z-10"><div className="flex justify-between items-start mb-6"><div><p className="text-xs tracking-widest uppercase mb-1 font-medium opacity-80" style={{ color: colors.accentWarm }}>本月實收租金</p><h3 className="text-4xl font-bold tracking-tight text-white">$142,500</h3></div><div className="p-2 rounded-full bg-white/10 backdrop-blur-md"><TrendingUp size={24} className="text-white" /></div></div><div className="flex gap-3"><div className="flex-1 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10"><p className="text-[10px] mb-1 opacity-80" style={{ color: colors.accentWarm }}>出租率</p><p className="text-xl font-bold text-white">95%</p></div><div className="flex-1 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10"><p className="text-[10px] mb-1 opacity-80" style={{ color: colors.accentWarm }}>待處理</p><p className="text-xl font-bold" style={{ color: '#FADCB8' }}>3 件</p></div></div></div></div>
         
-        {/* 專業工具箱 */}
+        {/* 專業工具箱 (6大功能區) */}
         <div className="animate-in fade-in slide-in-from-bottom-6 duration-700">
             <h3 className="text-xs font-bold tracking-widest mb-4 uppercase" style={{ color: colors.textSecondary }}>專業工具箱</h3>
             <div className="grid grid-cols-4 gap-y-6 gap-x-2">
                 
-                {/* 智能招租：連到 /marketing */}
+                {/* 1. 智能招租 */}
                 <Link href="/marketing">
                     <ToolBtn icon={<Megaphone size={22} />} label="智能招租" color="#E8B05C" />
                 </Link>
                 
-                {/* 合約製作：連到 /contract/new */}
+                {/* 2. 合約製作 */}
                 <Link href="/contract/new">
                     <ToolBtn icon={<PenTool size={22} />} label="合約製作" color="#7D9D75" />
                 </Link>
                 
-                <ToolBtn icon={<Hammer size={22} />} label="報修派遣" color="#C66C6C" />
+                {/* 3. 報修派遣 */}
+                <Link href="/repairs">
+                    <ToolBtn icon={<Hammer size={22} />} label="報修派遣" color="#C66C6C" />
+                </Link>
                 
-                {/* 🔥 投報試算：連到 /roi */}
+                {/* 4. 投報試算 */}
                 <Link href="/roi">
                     <ToolBtn icon={<Calculator size={22} />} label="投報試算" color="#6C8CC6" />
                 </Link>
                 
-                <ToolBtn icon={<Key size={22} />} label="門鎖管理" color="#8C7E74" />
-                <div className="opacity-30"><ToolBtn icon={<Settings size={22} />} label="更多功能" color="#8C7E74" /></div>
+                {/* 5. 門鎖管理 */}
+                <Link href="/locks">
+                    <ToolBtn icon={<Key size={22} />} label="門鎖管理" color="#8C7E74" />
+                </Link>
+                
+                {/* 6. 更多功能 (連到目錄頁) */}
+                <Link href="/settings">
+                    <div className="opacity-50 hover:opacity-100 transition-opacity">
+                        <ToolBtn icon={<Settings size={22} />} label="更多功能" color="#8C7E74" />
+                    </div>
+                </Link>
+
             </div>
         </div>
 
-        {/* 暮居選品 */}
+        {/* 暮居選品 (Banner) */}
         <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
              <div className="flex justify-between items-end mb-4">
                 <h3 className="text-xs font-bold tracking-widest uppercase" style={{ color: colors.textSecondary }}>暮居選品</h3>
                 <span className="text-[10px] font-bold text-[#CFB3A9]">會員專屬</span>
             </div>
-            <div className="rounded-[24px] p-5 shadow-sm relative overflow-hidden flex justify-between items-center cursor-pointer active:scale-95 transition-transform" 
-                 style={{ backgroundColor: '#E4D8CB' }}>
-                <div className="relative z-10">
-                    <h4 className="font-bold text-lg mb-1" style={{ color: colors.textPrimary }}>嚴選家具 & 工班</h4>
-                    <p className="text-xs font-medium opacity-80" style={{ color: colors.textPrimary }}>打造 Muji 風格的一站式採購</p>
-                    <button className="mt-3 px-4 py-2 rounded-full text-xs font-bold bg-white/80 shadow-sm" style={{ color: colors.textPrimary }}>
-                        進入商城
-                    </button>
+            
+            {/* 連到商城頁面 */}
+            <Link href="/shop">
+                <div className="rounded-[24px] p-5 shadow-sm relative overflow-hidden flex justify-between items-center cursor-pointer active:scale-95 transition-transform" 
+                     style={{ backgroundColor: '#E4D8CB' }}>
+                    <div className="relative z-10">
+                        <h4 className="font-bold text-lg mb-1" style={{ color: colors.textPrimary }}>嚴選家具 & 工班</h4>
+                        <p className="text-xs font-medium opacity-80" style={{ color: colors.textPrimary }}>打造 Muji 風格的一站式採購</p>
+                        <button className="mt-3 px-4 py-2 rounded-full text-xs font-bold bg-white/80 shadow-sm" style={{ color: colors.textPrimary }}>
+                            進入商城
+                        </button>
+                    </div>
+                    <div className="p-3 rounded-full bg-white/30 backdrop-blur-sm">
+                        <ShoppingBag size={32} style={{ color: colors.textPrimary }} />
+                    </div>
                 </div>
-                <div className="p-3 rounded-full bg-white/30 backdrop-blur-sm">
-                    <ShoppingBag size={32} style={{ color: colors.textPrimary }} />
-                </div>
-            </div>
+            </Link>
         </div>
 
         {/* 待辦事項 */}
@@ -96,12 +124,24 @@ export default function Dashboard() {
       <div className="flex-none h-24 relative flex justify-center items-start pt-4 pointer-events-none z-30">
         <div className="absolute inset-0 bg-gradient-to-t from-[#F1EEEB] via-[#F1EEEB]/80 to-transparent"></div>
         <div className="rounded-full shadow-2xl px-8 py-4 flex items-center gap-8 pointer-events-auto relative transform translate-y-2" style={{ backgroundColor: colors.navBg }}>
+            
+            {/* 首頁 */}
             <NavIcon icon={<Home size={24} />} active colors={colors} />
+            
+            {/* 房客與合約 */}
             <Link href="/tenants"><NavIcon icon={<Users size={24} />} colors={colors} /></Link>
-            <Link href="/properties/new"><div className="p-4 rounded-full -mt-12 shadow-xl border-4 transition-transform active:scale-95" style={{ backgroundColor: colors.accent, borderColor: colors.bgMain, color: 'white' }}><Plus size={28} /></div></Link>
+            
+            {/* 新增合約/房客 (中間大按鈕) */}
+            <Link href="/contract/new">
+                <div className="p-4 rounded-full -mt-12 shadow-xl border-4 transition-transform active:scale-95" style={{ backgroundColor: colors.accent, borderColor: colors.bgMain, color: 'white' }}>
+                    <Plus size={28} />
+                </div>
+            </Link>
+            
+            {/* 抄表 (暫定) */}
             <Link href="/meters"><NavIcon icon={<Zap size={24} />} colors={colors} /></Link>
             
-            {/* 連到設置頁面 */}
+            {/* 設定/目錄 */}
             <Link href="/settings"><NavIcon icon={<Settings size={24} />} colors={colors} /></Link>
         </div>
       </div>
